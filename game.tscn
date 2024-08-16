@@ -5,6 +5,6 @@
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0gxu6")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Pieces" type="Node2D" parent="."]
