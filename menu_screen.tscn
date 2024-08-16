@@ -1,0 +1,107 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw6ndpisnk4a0"]
+
+[ext_resource type="Theme" uid="uid://c7y11ry7cej8d" path="res://menu.tres" id="1_7d2ai"]
+[ext_resource type="Script" path="res://menu_button.gd" id="2_p4qqt"]
+[ext_resource type="Script" path="res://slider.gd" id="3_i6p5x"]
+
+[node name="MenuScreen" type="CanvasLayer"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.653638, 0.629829, 0.874911, 1)
+polygon = PackedVector2Array(-2, -3, 1922, -2, 1920, 1077, -2, 1080)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -83.5
+offset_bottom = 83.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 300
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 300
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_7d2ai")
+text = "Start"
+flat = true
+script = ExtResource("2_p4qqt")
+signal_name = "start_pressed"
+
+[node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_7d2ai")
+text = "Options"
+flat = true
+script = ExtResource("2_p4qqt")
+signal_name = "options_pressed"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_7d2ai")
+text = "Quit"
+flat = true
+script = ExtResource("2_p4qqt")
+signal_name = "quit_pressed"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Background Music" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_7d2ai")
+text = "Background Music"
+
+[node name="D" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("1_7d2ai")
+step = 10.0
+tick_count = 11
+script = ExtResource("3_i6p5x")
+signal_name = "bgm_changed"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="SFX" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_7d2ai")
+text = "Sound Effects"
+
+[node name="D" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("1_7d2ai")
+step = 10.0
+tick_count = 11
+script = ExtResource("3_i6p5x")
+signal_name = "sfx_changed"
