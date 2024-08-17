@@ -7,6 +7,7 @@ var polygon
 var mouse_on_me = false
 var dragging = false
 var dragging_spot
+var picked_up_from
 
 func set_polygon(points: PackedVector2Array):
 	polygon = Polygon2D.new()
@@ -29,7 +30,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if dragging:
-		position = get_global_mouse_position() - dragging_spot # * scale.x
+		position = get_global_mouse_position() - dragging_spot
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if mouse_on_me:
@@ -51,13 +52,24 @@ func _unhandled_input(event):
 			if mouse_on_me:
 				dragging = true
 				dragging_spot = get_global_mouse_position() - global_position
-				print("local_mouse: ", dragging_spot)
-				print("global_mouse: ", get_global_mouse_position())
-				print("global_pos: ", global_position)
+				picked_up_from = position
 		elif event.is_released():
 			if dragging:
 				position = round(position / Cs.SNAP_GRID_PIXELS) * Cs.SNAP_GRID_PIXELS
 				dragging = false
+				var outside = false
+				var inside = false
+				var game = get_parent()
+				print(game.container.polygon)
+				for p in polygon.polygon:
+					print(to_global(p))
+					if !Geometry2D.is_point_in_polygon(to_global(p), game.get_global_container_polygon()):
+						outside = true
+					else:
+						inside = true
+				if outside and inside:
+					position = picked_up_from
+
 
 func _mouse_enter() -> void:
 	mouse_on_me = true

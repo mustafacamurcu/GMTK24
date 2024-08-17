@@ -6,5 +6,4 @@
 script = ExtResource("1_0gxu6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="Pieces" type="Node2D" parent="."]
+zoom = Vector2(1.75, 1.75)
