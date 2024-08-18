@@ -6,9 +6,13 @@
 
 [node name="MenuScreen" type="CanvasLayer"]
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0.653638, 0.629829, 0.874911, 1)
-polygon = PackedVector2Array(-2, -3, 1922, -2, 1920, 1077, -2, 1080)
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.654902, 0.631373, 0.87451, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

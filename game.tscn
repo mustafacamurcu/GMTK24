@@ -1,9 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfnitqlqe5e8u"]
+[gd_scene load_steps=3 format=3 uid="uid://cfnitqlqe5e8u"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0gxu6"]
+[ext_resource type="AudioStream" uid="uid://bfqcjgsvkjghl" path="res://footstep_concrete_001.ogg" id="2_rwsl2"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0gxu6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.75, 1.75)
+
+[node name="Pieces" type="Node2D" parent="."]
+
+[node name="PutDown" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_rwsl2")

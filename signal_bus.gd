@@ -2,7 +2,8 @@ extends Node
 
 
 # Game Events
-
+signal piece_picked_up(piece: Piece)
+signal piece_put_down(piece: Piece)
 
 # UI Events
 signal start_pressed

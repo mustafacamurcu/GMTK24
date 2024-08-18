@@ -16,6 +16,7 @@ func _ready():
 	audio_stream_player.volume_db = linear_to_db(0)
 
 	SignalBus.start_pressed.connect(_on_start_pressed)
+	SignalBus.restart_pressed.connect(_on_start_pressed)
 	SignalBus.quit_pressed.connect(_on_quit_pressed)
 	SignalBus.options_pressed.connect(_on_options_pressed)
 	SignalBus.escape_pressed.connect(_on_escape_pressed)
@@ -39,6 +40,7 @@ func _on_start_pressed():
 		game.queue_free()
 	game = GAME.instantiate()
 	add_child(game)
+	game.setup(Cs.LEVEL1)
 
 func _on_host_online_multiplayer_pressed():
 	menu.hide()
