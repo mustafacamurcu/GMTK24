@@ -26,8 +26,23 @@ static var GRAY: Color = Color.DIM_GRAY
 
 static var COLORS = [GREEN1, GREEN2, BLUE1, RED1, RED2, GRAY]
 
-# Utility Methods
+# Sound
 
+var sfx_value = 60
+var bgm_value = 60
+
+func _ready():
+  SignalBus.sfx_changed.connect(_on_sfx_changed)
+  SignalBus.bgm_changed.connect(_on_bgm_changed)
+
+func _on_sfx_changed(value):
+  sfx_value = value
+
+func _on_bgm_changed(value):
+  bgm_value = value
+
+
+# Utility Methods
 func snap_to_grid(point: Vector2, snap_grid_pixels) -> Vector2i:
   return round(point / snap_grid_pixels) * snap_grid_pixels
 

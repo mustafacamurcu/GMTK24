@@ -29,7 +29,7 @@ func set_polygon(points: PackedVector2Array, level_, c):
 	polygon = Polygon2D.new()
 	polygon.polygon = points
 	polygon.color = c
-	polygon.color.a = 0.8
+	polygon.color.a = 0.7
 	add_child(polygon)
 	# Area2D polygon for mouse events
 	polygon_shape.polygon = polygon.polygon

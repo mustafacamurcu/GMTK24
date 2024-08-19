@@ -27,7 +27,8 @@ func _ready():
 	tutorial.hide()
 
 	audio_stream_player.play()
-	audio_stream_player.volume_db = linear_to_db(0)
+	# audio_stream_player.volume_db = linear_to_db(0)
+	SignalBus.sfx_changed.emit(Cs.sfx_value)
 
 	SignalBus.start_pressed.connect(_on_start_pressed)
 	SignalBus.restart_pressed.connect(_on_restart_pressed)

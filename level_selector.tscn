@@ -28,8 +28,9 @@ theme_override_constants/margin_bottom = 50
 [node name="Label" type="Label" parent="VBox/LabelMargin"]
 layout_mode = 2
 theme = ExtResource("1_uspfx")
+theme_override_constants/outline_size = 25
 theme_override_font_sizes/font_size = 150
-text = "Level Selection"
+text = "Level  Selection"
 horizontal_alignment = 1
 
 [node name="GridMargin" type="MarginContainer" parent="VBox"]
@@ -58,7 +59,7 @@ theme_override_constants/margin_bottom = 100
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_uspfx")
-theme_override_colors/font_color = Color(0.61, 0.1159, 0.1159, 1)
+theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 80
 text = "Back
 "

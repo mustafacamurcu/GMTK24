@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw6ndpisnk4a0"]
+[gd_scene load_steps=6 format=3 uid="uid://dw6ndpisnk4a0"]
 
 [ext_resource type="Theme" uid="uid://c7y11ry7cej8d" path="res://menu.tres" id="1_7d2ai"]
+[ext_resource type="FontFile" uid="uid://j4npda7u1ew6" path="res://Matemasie-Regular.ttf" id="1_526iu"]
 [ext_resource type="Script" path="res://menu_button.gd" id="2_p4qqt"]
 [ext_resource type="Script" path="res://slider.gd" id="3_i6p5x"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mrtd2"]
 line_spacing = -10.0
+font = ExtResource("1_526iu")
 font_size = 150
 font_color = Color(0.966068, 0.460629, 0.636852, 1)
 outline_size = 50
@@ -21,22 +23,27 @@ vertex_colors = PackedColorArray(0.65601, 0.411541, 0.19615, 1, 0.624269, 0.2149
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -83.5
-offset_bottom = 83.5
+offset_left = -153.0
+offset_top = -124.0
+offset_right = 153.0
+offset_bottom = 124.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 300
-theme_override_constants/margin_top = 300
+theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 300
-theme_override_constants/margin_bottom = 300
+theme_override_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/separation = 15
 alignment = 1
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "Mr. Wizard,
 The Window Mender!"
@@ -45,7 +52,10 @@ horizontal_alignment = 1
 
 [node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("1_7d2ai")
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 100
 text = "Start"
 flat = true
 script = ExtResource("2_p4qqt")
@@ -53,7 +63,10 @@ signal_name = "start_pressed"
 
 [node name="Tutorial" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("1_7d2ai")
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 100
 text = "How To Play
 "
 flat = true
@@ -62,7 +75,10 @@ signal_name = "tutorial_pressed"
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("1_7d2ai")
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 100
 text = "Quit"
 flat = true
 script = ExtResource("2_p4qqt")
@@ -72,6 +88,7 @@ signal_name = "quit_pressed"
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/margin_left = 50
@@ -83,12 +100,12 @@ layout_mode = 2
 [node name="Background Music" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_7d2ai")
+theme_override_constants/outline_size = 15
 text = "Background Music"
 horizontal_alignment = 1
 
 [node name="D" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 4
 theme = ExtResource("1_7d2ai")
 step = 20.0
 value = 60.0
@@ -99,22 +116,29 @@ signal_name = "bgm_changed"
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_left = 400
+theme_override_constants/margin_right = 400
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
-layout_mode = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 1598.0
+offset_top = 22.0
+offset_right = 1885.0
+offset_bottom = 117.0
 
-[node name="SFX" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="SFX" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("1_7d2ai")
-text = "Sound Effects"
+theme_override_constants/outline_size = 15
+text = "Volume
+"
 horizontal_alignment = 1
 
-[node name="D" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="D" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
 theme = ExtResource("1_7d2ai")
 step = 20.0
 value = 60.0

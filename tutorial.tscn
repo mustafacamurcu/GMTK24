@@ -288,9 +288,13 @@ animations = [{
 
 [sub_resource type="LabelSettings" id="LabelSettings_nmw66"]
 font_size = 80
+outline_size = 10
+outline_color = Color(0.078876, 0.155167, 0.184903, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4a85n"]
 font_size = 50
+outline_size = 30
+outline_color = Color(0.111197, 0.111197, 0.111197, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_to68x"]
 animations = [{
@@ -638,13 +642,14 @@ vertex_colors = PackedColorArray(0.65601, 0.411541, 0.19615, 1, 0.624269, 0.2149
 [node name="Pages" type="Node2D" parent="."]
 
 [node name="Page1" type="Node2D" parent="Pages"]
+visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pages/Page1"]
 position = Vector2(959, 378)
 scale = Vector2(2.07692, 2.12312)
 sprite_frames = SubResource("SpriteFrames_rafrk")
 autoplay = "default"
-frame_progress = 0.857441
+frame_progress = 0.372539
 
 [node name="Label" type="Label" parent="Pages/Page1"]
 offset_left = -103.0
@@ -667,14 +672,13 @@ label_settings = SubResource("LabelSettings_4a85n")
 horizontal_alignment = 1
 
 [node name="Page2" type="Node2D" parent="Pages"]
-visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pages/Page2"]
 position = Vector2(889, 370)
 scale = Vector2(2.07692, 2.12312)
 sprite_frames = SubResource("SpriteFrames_to68x")
 autoplay = "default"
-frame_progress = 0.409162
+frame_progress = 0.627316
 
 [node name="Label" type="Label" parent="Pages/Page2"]
 offset_left = -132.0
@@ -704,7 +708,7 @@ position = Vector2(973, 363)
 scale = Vector2(2.07692, 2.12312)
 sprite_frames = SubResource("SpriteFrames_ksrgy")
 autoplay = "default"
-frame_progress = 0.651181
+frame_progress = 0.16628
 
 [node name="Label" type="Label" parent="Pages/Page3"]
 offset_left = -132.0
@@ -734,7 +738,7 @@ position = Vector2(889, 370)
 scale = Vector2(2.07692, 2.12312)
 sprite_frames = SubResource("SpriteFrames_h248e")
 autoplay = "default"
-frame_progress = 0.610958
+frame_progress = 0.126056
 
 [node name="Label" type="Label" parent="Pages/Page4"]
 offset_left = -132.0

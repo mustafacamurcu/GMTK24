@@ -19,7 +19,7 @@ func _on_tutorial_pressed():
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed('space'):
+	if event.is_action_pressed('space') and visible:
 		next_page()
 
 func next_page():

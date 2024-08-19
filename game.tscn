@@ -1,18 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfnitqlqe5e8u"]
+[gd_scene load_steps=11 format=3 uid="uid://cfnitqlqe5e8u"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0gxu6"]
 [ext_resource type="AudioStream" uid="uid://bfqcjgsvkjghl" path="res://audio/footstep_concrete_001.ogg" id="2_rwsl2"]
 [ext_resource type="AudioStream" uid="uid://du7nfg0wxlket" path="res://audio/269198__mickleness__game-win.mp3" id="3_3l3ht"]
 [ext_resource type="Script" path="res://sfx.gd" id="3_3v2id"]
 [ext_resource type="Script" path="res://menu_button.gd" id="3_pjgsm"]
+[ext_resource type="FontFile" uid="uid://j4npda7u1ew6" path="res://Matemasie-Regular.ttf" id="5_kdjhq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5awvw"]
 bg_color = Color(0.498039, 0.733333, 0.505882, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.352941, 0.486275, 0.25098, 1)
+corner_radius_top_left = 150
+corner_radius_top_right = 150
+corner_radius_bottom_right = 150
+corner_radius_bottom_left = 150
+
+[sub_resource type="LabelSettings" id="LabelSettings_b8kc6"]
+font = ExtResource("5_kdjhq")
+font_size = 140
+outline_size = 50
+outline_color = Color(1, 0.18, 0.18, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kiqy0"]
+font = ExtResource("5_kdjhq")
+font_size = 45
+font_color = Color(0.508667, 1, 0.33, 1)
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkfha"]
 content_margin_left = 30.0
-content_margin_right = 15.0
+content_margin_right = 30.0
+content_margin_bottom = 10.0
 bg_color = Color(0.352037, 0.487601, 0.252487, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0gxu6")
@@ -27,11 +55,11 @@ vertex_colors = PackedColorArray(0.65601, 0.411541, 0.19615, 1, 0.624269, 0.2149
 
 [node name="Pieces" type="Node2D" parent="."]
 
-[node name="PutDownBoard" type="AudioStreamPlayer2D" parent="."]
+[node name="PutDownBoard" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_rwsl2")
 script = ExtResource("3_3v2id")
 
-[node name="WinSound" type="AudioStreamPlayer2D" parent="."]
+[node name="WinSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_3l3ht")
 script = ExtResource("3_3v2id")
 volume_factor = 0.6
@@ -40,86 +68,94 @@ volume_factor = 0.6
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_top = -540.0
+offset_top = -486.0
 offset_right = 960.0
-offset_bottom = 540.0
+offset_bottom = 500.0
 
 [node name="PanelContainer" type="PanelContainer" parent="YouWon"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 53.0
+offset_left = 80.0
+offset_top = -28.0
+offset_right = -34.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5awvw")
 
-[node name="MarginContainer" type="MarginContainer" parent="YouWon/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_bottom = 70
-
-[node name="VBoxContainer" type="VBoxContainer" parent="YouWon/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="YouWon/PanelContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="YouWon/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_bottom = 30
 
-[node name="Label" type="Label" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="Label" type="Label" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 200
-text = "Solved!"
+text = "SOLVED!"
+label_settings = SubResource("LabelSettings_b8kc6")
 horizontal_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="YouWon/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Flavor" type="Label" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+text = "Thanks Mr. Wizard. 
+Now I can watch the boat
+sway on the sea outside.
+Isn't our magical land beautiful?"
+label_settings = SubResource("LabelSettings_kiqy0")
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="YouWon/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_top = 100
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_top = 75
 
-[node name="VBoxContainer" type="VBoxContainer" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
-theme_override_constants/separation = 50
+theme_override_constants/separation = 30
 alignment = 1
 
-[node name="PanelContainer2" type="PanelContainer" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_hkfha")
 
-[node name="NextLevel" type="Button" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer2"]
+[node name="NextLevel" type="Button" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer2"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 100
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("5_kdjhq")
+theme_override_font_sizes/font_size = 80
 text = "Next Level
 "
 flat = true
 script = ExtResource("3_pjgsm")
 signal_name = "next_level_pressed"
 
-[node name="PanelContainer" type="PanelContainer" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_hkfha")
 
-[node name="LevelSelection" type="Button" parent="YouWon/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer"]
+[node name="LevelSelection" type="Button" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 100
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("5_kdjhq")
+theme_override_font_sizes/font_size = 80
 text = "Level Selection"
 flat = true
 script = ExtResource("3_pjgsm")
@@ -128,18 +164,18 @@ signal_name = "level_selection_pressed"
 [node name="Particles" type="Node2D" parent="."]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Particles"]
-position = Vector2(492, 15)
+position = Vector2(-155, 494)
 emitting = false
-amount = 50
+amount = 80
 lifetime = 1.5
 one_shot = true
-explosiveness = 0.5
+explosiveness = 0.4
 randomness = 1.0
 direction = Vector2(0, -1)
-spread = 30.0
+spread = 60.0
 gravity = Vector2(0, 1500)
-initial_velocity_min = 600.0
-initial_velocity_max = 1200.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 2000.0
 angular_velocity_max = 360.0
 angle_min = -720.0
 angle_max = 720.0
@@ -148,18 +184,18 @@ scale_amount_max = 40.0
 color = Color(0.71, 0.1065, 0, 1)
 
 [node name="CPUParticles2D2" type="CPUParticles2D" parent="Particles"]
-position = Vector2(492, 15)
+position = Vector2(136, 504)
 emitting = false
-amount = 50
+amount = 80
 lifetime = 1.5
 one_shot = true
-explosiveness = 0.5
+explosiveness = 0.4
 randomness = 1.0
 direction = Vector2(0, -1)
-spread = 30.0
+spread = 60.0
 gravity = Vector2(0, 1500)
-initial_velocity_min = 600.0
-initial_velocity_max = 1200.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 2000.0
 angular_velocity_max = 360.0
 angle_min = -720.0
 angle_max = 720.0
@@ -168,18 +204,18 @@ scale_amount_max = 40.0
 color = Color(0.459106, 0.677231, 0, 1)
 
 [node name="CPUParticles2D3" type="CPUParticles2D" parent="Particles"]
-position = Vector2(492, 15)
+position = Vector2(-338, 487)
 emitting = false
-amount = 50
+amount = 80
 lifetime = 1.5
 one_shot = true
-explosiveness = 0.5
+explosiveness = 0.4
 randomness = 1.0
 direction = Vector2(0, -1)
-spread = 30.0
+spread = 60.0
 gravity = Vector2(0, 1500)
-initial_velocity_min = 600.0
-initial_velocity_max = 1200.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 2000.0
 angular_velocity_max = 360.0
 angle_min = -720.0
 angle_max = 720.0
@@ -188,18 +224,18 @@ scale_amount_max = 40.0
 color = Color(0, 0.027, 0.81, 1)
 
 [node name="CPUParticles2D4" type="CPUParticles2D" parent="Particles"]
-position = Vector2(492, 15)
+position = Vector2(292, 495)
 emitting = false
-amount = 50
+amount = 80
 lifetime = 1.5
 one_shot = true
-explosiveness = 0.5
+explosiveness = 0.4
 randomness = 1.0
 direction = Vector2(0, -1)
-spread = 30.0
+spread = 60.0
 gravity = Vector2(0, 1500)
-initial_velocity_min = 600.0
-initial_velocity_max = 1200.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 2000.0
 angular_velocity_max = 360.0
 angle_min = -720.0
 angle_max = 720.0
