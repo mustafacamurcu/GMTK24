@@ -23,7 +23,7 @@ offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-color = Color(0.76, 0.61142, 0.2356, 1)
+color = Color(0.68, 0.54128, 0.1904, 1)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

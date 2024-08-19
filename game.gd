@@ -76,23 +76,55 @@ func check_for_win():
 func setup(level_: Level):
 	level = level_
 	create_container()
+	create_frame()
 	create_pieces()
-	create_piece_box()
+	# create_piece_box()
 
 func create_container():
-	var container_edge_size = level.container_edge_size
+	var half = level.container_edge_size / 2
 	container = Polygon2D.new()
 	container.polygon = PackedVector2Array([
-		Vector2i(0, container_edge_size),
-		Vector2i(0, 0),
-		Vector2i(container_edge_size, 0),
-		Vector2i(container_edge_size, container_edge_size)
+		Vector2i(-half, half),
+		Vector2i(-half, -half),
+		Vector2i(half, -half),
+		Vector2i(half, half)
 	])
-	var offset = Vector2i(-Cs.SCREEN_WIDTH / 4, 0)
-	container.position = Cs.snap_to_grid(Vector2i(-container_edge_size / 2, -container_edge_size / 2) + offset, level.snap_grid_pixels)
+	var offset = Vector2i(-Cs.SCREEN_WIDTH / 4 + 10, 0)
+	container.position = Cs.snap_to_grid(offset, level.snap_grid_pixels)
 	container.color = Cs.WHITE
 	add_child(container)
 	container.z_index = -2
+
+func create_frame():
+	var cross = Polygon2D.new()
+	var width = 5
+	var half = level.container_edge_size / 2
+	cross.polygon = PackedVector2Array([
+		Vector2i(-width, -half),
+		Vector2i(+ width, -half),
+		Vector2i(+ width, -width),
+		Vector2i(half, -width),
+		Vector2i(half, + width),
+		Vector2i(+ width, + width),
+		Vector2i(+ width, + half),
+		Vector2i(-width, + half),
+		Vector2i(-width, + width),
+		Vector2i(-half, + width),
+		Vector2i(-half, -width),
+		Vector2i(-width, -width),
+	])
+	cross.color = Color.hex(0x664433FF)
+	cross.position = container.position
+	add_child(cross)
+	cross.z_index = -1
+	
+	var frame = Polygon2D.new()
+	frame.polygon = container.polygon.duplicate()
+	frame.position = container.position
+	frame.scale = Vector2(1.1, 1.1)
+	frame.color = Color.hex(0x664433FF)
+	add_child(frame)
+	frame.z_index = -3
 
 func create_piece_box():
 	var scale = 0.9
