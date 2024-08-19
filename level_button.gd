@@ -4,6 +4,7 @@ var level: Level
 
 @onready var area2d = $Area2D
 @onready var color_rect = $ColorRect
+@onready var border = $Border
 @onready var label = $ColorRect/Label
 
 var revealed = false
@@ -21,7 +22,7 @@ func set_level(l: Level):
 
 func unlock():
 	unlocked = true
-	color_rect.color = Cs.GREEN
+	color_rect.color = Cs.GREEN1
 
 func reveal():
 	if revealed:
@@ -35,6 +36,7 @@ func reveal():
 		poly.scale.y = scale_factor
 		add_child(poly)
 	color_rect.hide()
+	border.show()
 
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

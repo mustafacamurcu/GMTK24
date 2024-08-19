@@ -13,7 +13,8 @@ var scale
 var position
 var rotation
 
-func _init(poly, c, s = 1, p = Vector2(0, 0), r = 0):
+# position in grid coordinates. will be multiplied by level.snap_grid_pixels later
+func _init(poly, c, s: float = 1., p = Vector2i(0, 0), r = 0):
   polygon = v(poly)
   color = c
   scale = s

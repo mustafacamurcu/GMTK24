@@ -12,6 +12,7 @@ var picked_up_from
 var rotation_pivot
 
 var level: Level
+var shape_id
 
 var scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4]
 var small_scales = [0.25, 0.5, 0.75, 1]
@@ -28,7 +29,7 @@ func set_polygon(points: PackedVector2Array, level_, c):
 	polygon = Polygon2D.new()
 	polygon.polygon = points
 	polygon.color = c
-	polygon.color.a = 0.9
+	polygon.color.a = 0.8
 	add_child(polygon)
 	# Area2D polygon for mouse events
 	polygon_shape.polygon = polygon.polygon
@@ -47,13 +48,44 @@ func _process(_delta: float) -> void:
 		position = get_global_mouse_position() - dragging_spot
 
 func expand():
+	var center_before = Vector2.ZERO
+	for p in polygon.polygon:
+		center_before += to_global(p)
+	center_before /= polygon.polygon.size()
 	scale.x += .25
 	scale.y += .25
+	var center_after = Vector2.ZERO
+	for p in polygon.polygon:
+		center_after += to_global(p)
+	center_after /= polygon.polygon.size()
+	position += center_before - center_after
 
 func shrink():
-	if scale.x > 0.3:
-		scale.x -= .25
-		scale.y -= .25
+	if scale.x < 0.3:
+		return
+	var center_before = Vector2.ZERO
+	for p in polygon.polygon:
+		center_before += to_global(p)
+	center_before /= polygon.polygon.size()
+	scale.x -= .25
+	scale.y -= .25
+	var center_after = Vector2.ZERO
+	for p in polygon.polygon:
+		center_after += to_global(p)
+	center_after /= polygon.polygon.size()
+	position += center_before - center_after
+
+func rotate_in_place(deg):
+	var center_before = Vector2.ZERO
+	for p in polygon.polygon:
+		center_before += to_global(p)
+	center_before /= polygon.polygon.size()
+	rotation_degrees -= deg
+	var center_after = Vector2.ZERO
+	for p in polygon.polygon:
+		center_after += to_global(p)
+	center_after /= polygon.polygon.size()
+	position += center_before - center_after
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if mouse_on_me:
@@ -64,10 +96,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			shrink()
 			get_viewport().set_input_as_handled()
 		if event.is_action_pressed('left'):
-			rotation_degrees -= 90
+			rotate_in_place(-90)
 			get_viewport().set_input_as_handled()
 		if event.is_action_pressed('right'):
-			rotation_degrees += 90
+			rotate_in_place(90)
 			get_viewport().set_input_as_handled()
 		
 
@@ -85,11 +117,8 @@ func _unhandled_input(event):
 				position = Cs.snap_to_grid(position, level.snap_grid_pixels)
 				SignalBus.piece_put_down.emit(self)
 				dragging = false
-				# print("params:")
-				# print(position)
-				# print(rotation_degrees)
-				# print(scale)
-				# print(level.snap_grid_pixels)
+				print(", ", str(scale.x), ", Vector2i", str(position / float(level.snap_grid_pixels)), ", ", str(rotation_degrees))
+				print("shape id: ", shape_id)
 
 func _mouse_enter() -> void:
 	mouse_on_me = true

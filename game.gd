@@ -3,8 +3,12 @@ extends Node2D
 const PIECE = preload("res://piece.tscn")
 
 @onready var pieces = $Pieces
-@onready var put_down_sfx = $PutDown
+@onready var put_down_sfx = $PutDownBoard
+@onready var win_sfx = $WinSound
 @onready var you_won = $YouWon
+@onready var particles = $Particles
+
+var won = false
 
 var container: Polygon2D
 var piece_box: Polygon2D
@@ -24,7 +28,13 @@ func _on_piece_put_down(_piece: Piece):
 		win()
 
 func win():
+	if won:
+		return
+	won = true
 	you_won.show()
+	win_sfx.play()
+	for particle: CPUParticles2D in particles.get_children():
+		particle.emitting = true
 	SignalBus.level_completed.emit(level)
 
 func check_for_win():
@@ -112,7 +122,8 @@ func _on_next_level_pressed():
 	SignalBus.level_selected.emit(Cs.LEVELS[level.number % 10])
 
 func create_pieces():
-	for shape in level.shapes:
+	for shape_id in range(level.shapes.size()):
+		var shape = level.shapes[shape_id]
 		var poly = shape.polygon.duplicate()
 		# translate grid points to pixel points
 		for i in range(poly.size()):
@@ -133,10 +144,11 @@ func create_pieces():
 		
 		var piece = PIECE.instantiate()
 		pieces.add_child(piece)
-		piece.position = shape.position
+		piece.position = shape.position * level.snap_grid_pixels
 		piece.rotation_degrees = shape.rotation
 		piece.scale.x = shape.scale
 		piece.scale.y = shape.scale
+		piece.shape_id = shape_id
 		piece.set_polygon(PackedVector2Array(poly), level, shape.color)
 
 
@@ -149,16 +161,6 @@ func get_global_container_polygon():
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed('restart'):
 		SignalBus.restart_pressed.emit()
-
-func _unhandled_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
-		if event.is_pressed():
-			var pos = get_global_mouse_position()
-			var label = Label.new()
-			label.position = pos
-			label.text = str(round(pos.x / level.snap_grid_pixels)) + ", " + str(round(pos.y / level.snap_grid_pixels))
-			# label.text = str(int(pos.x)) + ", " + str(int(pos.y))
-			add_child(label)
 
 func _draw() -> void:
 	# for i in range(1, level.grid_size):

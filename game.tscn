@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfnitqlqe5e8u"]
+[gd_scene load_steps=8 format=3 uid="uid://cfnitqlqe5e8u"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0gxu6"]
 [ext_resource type="AudioStream" uid="uid://bfqcjgsvkjghl" path="res://audio/footstep_concrete_001.ogg" id="2_rwsl2"]
+[ext_resource type="AudioStream" uid="uid://du7nfg0wxlket" path="res://audio/269198__mickleness__game-win.mp3" id="3_3l3ht"]
+[ext_resource type="Script" path="res://sfx.gd" id="3_3v2id"]
 [ext_resource type="Script" path="res://menu_button.gd" id="3_pjgsm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5awvw"]
@@ -13,12 +15,24 @@ bg_color = Color(0.352037, 0.487601, 0.252487, 1)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_0gxu6")
 
+[node name="Polygon2D" type="Polygon2D" parent="."]
+z_index = -100
+position = Vector2(-968, -534)
+polygon = PackedVector2Array(-30, -23, 1957, -14, 1946, 1095, -23, 1096)
+vertex_colors = PackedColorArray(0.65601, 0.411541, 0.19615, 1, 0.624269, 0.214917, 0.415644, 1, 0.483642, 0.27893, 0.267511, 1, 0.32385, 0.598421, 0.522926, 1)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Pieces" type="Node2D" parent="."]
 
-[node name="PutDown" type="AudioStreamPlayer2D" parent="."]
+[node name="PutDownBoard" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_rwsl2")
+script = ExtResource("3_3v2id")
+
+[node name="WinSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_3l3ht")
+script = ExtResource("3_3v2id")
+volume_factor = 0.6
 
 [node name="YouWon" type="Control" parent="."]
 visible = false
@@ -107,3 +121,85 @@ text = "Level Selection"
 flat = true
 script = ExtResource("3_pjgsm")
 signal_name = "level_selection_pressed"
+
+[node name="Particles" type="Node2D" parent="."]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Particles"]
+position = Vector2(474, -42)
+emitting = false
+amount = 50
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.5
+randomness = 1.0
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 1500)
+initial_velocity_min = 400.0
+initial_velocity_max = 1000.0
+angular_velocity_max = 360.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 15.0
+scale_amount_max = 40.0
+color = Color(0.71, 0.1065, 0, 1)
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Particles"]
+position = Vector2(474, -42)
+emitting = false
+amount = 50
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.5
+randomness = 1.0
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 1500)
+initial_velocity_min = 400.0
+initial_velocity_max = 1000.0
+angular_velocity_max = 360.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 15.0
+scale_amount_max = 40.0
+color = Color(0.459106, 0.677231, 0, 1)
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="Particles"]
+position = Vector2(474, -42)
+emitting = false
+amount = 50
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.5
+randomness = 1.0
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 1500)
+initial_velocity_min = 400.0
+initial_velocity_max = 1000.0
+angular_velocity_max = 360.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 15.0
+scale_amount_max = 40.0
+color = Color(0, 0.027, 0.81, 1)
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="Particles"]
+position = Vector2(474, -42)
+emitting = false
+amount = 50
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.5
+randomness = 1.0
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 1500)
+initial_velocity_min = 400.0
+initial_velocity_max = 1000.0
+angular_velocity_max = 360.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 15.0
+scale_amount_max = 40.0
+color = Color(0.7776, 0.77868, 0.81, 1)

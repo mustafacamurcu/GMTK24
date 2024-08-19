@@ -6,13 +6,9 @@
 
 [node name="MenuScreen" type="CanvasLayer"]
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.654902, 0.631373, 0.87451, 1)
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-30, -23, 1957, -14, 1946, 1095, -23, 1096)
+vertex_colors = PackedColorArray(0.65601, 0.411541, 0.19615, 1, 0.624269, 0.214917, 0.415644, 1, 0.483642, 0.27893, 0.267511, 1, 0.32385, 0.598421, 0.522926, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -41,13 +37,14 @@ flat = true
 script = ExtResource("2_p4qqt")
 signal_name = "start_pressed"
 
-[node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Tutorial" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_7d2ai")
-text = "Options"
+text = "How To Play
+"
 flat = true
 script = ExtResource("2_p4qqt")
-signal_name = "options_pressed"
+signal_name = "tutorial_pressed"
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -80,8 +77,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("1_7d2ai")
-step = 10.0
-tick_count = 11
+step = 20.0
+value = 60.0
+tick_count = 6
 script = ExtResource("3_i6p5x")
 signal_name = "bgm_changed"
 
@@ -105,7 +103,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("1_7d2ai")
-step = 10.0
-tick_count = 11
+step = 20.0
+value = 60.0
+tick_count = 6
 script = ExtResource("3_i6p5x")
 signal_name = "sfx_changed"

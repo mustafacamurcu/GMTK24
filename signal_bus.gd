@@ -14,7 +14,7 @@ signal level_selection_pressed
 signal next_level_pressed
 signal quit_pressed
 signal back_to_menu_pressed
-signal options_pressed
+signal tutorial_pressed
 signal escape_pressed
 
 # Audio
