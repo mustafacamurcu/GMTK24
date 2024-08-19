@@ -13,27 +13,34 @@ var rotation_pivot
 
 var level: Level
 
-func set_polygon(points: PackedVector2Array, level_):
+var scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4]
+var small_scales = [0.25, 0.5, 0.75, 1]
+var rotations = [0, 90, 180, 270]
+
+func get_global_polygon():
+	var points = []
+	for point in polygon.polygon:
+		points.append(to_global(point))
+	return points
+
+func set_polygon(points: PackedVector2Array, level_, c):
 	level = level_
 	polygon = Polygon2D.new()
 	polygon.polygon = points
-	polygon.color = Cs.COLORS.pick_random()
+	polygon.color = c
 	polygon.color.a = 0.9
 	add_child(polygon)
-	
+	# Area2D polygon for mouse events
 	polygon_shape.polygon = polygon.polygon
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-	# var center = Polygon2D.new()
-	# center.polygon = PackedVector2Array([
-	# 	Vector2(-10, 10),
-	# 	Vector2(-10, -10),
-	# 	Vector2(10, -10),
-	# 	Vector2(10, 10)
-	# ])
-	# add_child(center)
+func shuffle():
+	var s = scales.pick_random()
+	var area = Cs.polygon_area(polygon.polygon)
+	if area * s * s > (level.container_edge_size) * (level.container_edge_size) / 8:
+		s = small_scales.pick_random()
+	scale.x = s
+	scale.y = s
+	rotation_degrees = rotations.pick_random()
 
 func _process(_delta: float) -> void:
 	if dragging:
@@ -43,8 +50,8 @@ func expand():
 	scale.x += .25
 	scale.y += .25
 
-func shrink(forced = false):
-	if scale.x > 1.1 or forced or true:
+func shrink():
+	if scale.x > 0.3:
 		scale.x -= .25
 		scale.y -= .25
 
@@ -52,13 +59,17 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if mouse_on_me:
 		if event.is_action_pressed('big'):
 			expand()
+			get_viewport().set_input_as_handled()
 		if event.is_action_pressed('small'):
 			shrink()
+			get_viewport().set_input_as_handled()
 		if event.is_action_pressed('left'):
 			rotation_degrees -= 90
+			get_viewport().set_input_as_handled()
 		if event.is_action_pressed('right'):
 			rotation_degrees += 90
-		get_viewport().set_input_as_handled()
+			get_viewport().set_input_as_handled()
+		
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -71,9 +82,14 @@ func _unhandled_input(event):
 				get_viewport().set_input_as_handled()
 		elif event.is_released():
 			if dragging:
-				SignalBus.piece_put_down.emit(self)
 				position = Cs.snap_to_grid(position, level.snap_grid_pixels)
+				SignalBus.piece_put_down.emit(self)
 				dragging = false
+				# print("params:")
+				# print(position)
+				# print(rotation_degrees)
+				# print(scale)
+				# print(level.snap_grid_pixels)
 
 func _mouse_enter() -> void:
 	mouse_on_me = true

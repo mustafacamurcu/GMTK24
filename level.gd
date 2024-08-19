@@ -1,17 +1,19 @@
 class_name Level
 extends Resource
 
-var polygons
+var shapes: Array[Shape]
 var grid_size
 var snap_grid_pixels
 var container_edge_size
+var number
 
-static func create(_snap_grid_pixels, _grid_size, _polygons) -> Level:
+static func create(_grid_size, _shapes: Array[Shape], n) -> Level:
   var level = Level.new()
-  level.snap_grid_pixels = _snap_grid_pixels
+  level.snap_grid_pixels = int(Cs.CONTAINER_EDGE_SIZE / _grid_size)
+  level.number = n
   level.grid_size = _grid_size
-  level.container_edge_size = _snap_grid_pixels * _grid_size
-  level.polygons = _polygons
+  level.container_edge_size = int(Cs.CONTAINER_EDGE_SIZE / _grid_size) * _grid_size
+  level.shapes = _shapes
   return level
 
 

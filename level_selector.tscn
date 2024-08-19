@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhl3jjqv5ncl3"]
+[gd_scene load_steps=4 format=3 uid="uid://dhl3jjqv5ncl3"]
 
+[ext_resource type="Script" path="res://level_selector.gd" id="1_cxuui"]
 [ext_resource type="Theme" uid="uid://c7y11ry7cej8d" path="res://menu.tres" id="1_uspfx"]
+[ext_resource type="Script" path="res://menu_button.gd" id="2_al6v3"]
 
 [node name="LevelSelector" type="CanvasLayer"]
+script = ExtResource("1_cxuui")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -12,96 +15,57 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.654902, 0.631373, 0.87451, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -83.5
-offset_bottom = 83.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 300
-theme_override_constants/margin_top = 300
-theme_override_constants/margin_right = 300
-theme_override_constants/margin_bottom = 300
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="LabelMargin" type="MarginContainer" parent="VBox"]
 layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="VBox/LabelMargin"]
 layout_mode = 2
 theme = ExtResource("1_uspfx")
-theme_override_font_sizes/font_size = 100
-text = "Levels"
+theme_override_font_sizes/font_size = 150
+text = "Level Selection"
 horizontal_alignment = 1
 
-[node name="Grid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+[node name="GridMargin" type="MarginContainer" parent="VBox"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+theme_override_constants/margin_left = 300
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 100
+
+[node name="GridContainer" type="GridContainer" parent="VBox/GridMargin"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 360
+theme_override_constants/v_separation = 300
 columns = 5
 
-[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/VBoxContainer/Grid"]
+[node name="BackMargin" type="MarginContainer" parent="VBox"]
 layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 30
+size_flags_vertical = 10
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 100
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Grid/MarginContainer5"]
+[node name="BackToMenu" type="Button" parent="VBox/BackMargin"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("1_uspfx")
-text = "1"
+theme_override_colors/font_color = Color(0.61, 0.1159, 0.1159, 1)
+theme_override_font_sizes/font_size = 80
+text = "Back
+"
 flat = true
-
-[node name="MarginContainer6" type="MarginContainer" parent="MarginContainer/VBoxContainer/Grid"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 30
-
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Grid/MarginContainer6"]
-layout_mode = 2
-theme = ExtResource("1_uspfx")
-text = "2"
-flat = true
-
-[node name="MarginContainer7" type="MarginContainer" parent="MarginContainer/VBoxContainer/Grid"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 30
-
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Grid/MarginContainer7"]
-layout_mode = 2
-theme = ExtResource("1_uspfx")
-text = "3"
-flat = true
-
-[node name="MarginContainer8" type="MarginContainer" parent="MarginContainer/VBoxContainer/Grid"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 30
-
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Grid/MarginContainer8"]
-layout_mode = 2
-theme = ExtResource("1_uspfx")
-text = "4"
-flat = true
-
-[node name="MarginContainer9" type="MarginContainer" parent="MarginContainer/VBoxContainer/Grid"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 30
-
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Grid/MarginContainer9"]
-layout_mode = 2
-theme = ExtResource("1_uspfx")
-text = "5"
-flat = true
+script = ExtResource("2_al6v3")
+signal_name = "back_to_menu_pressed"
