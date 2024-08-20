@@ -9,7 +9,7 @@ var level: Level
 @onready var label = $ColorRect/Label
 
 var revealed = false
-var unlocked = true
+var unlocked = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

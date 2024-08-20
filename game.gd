@@ -70,11 +70,6 @@ func win():
 		tween.parallel().tween_property(cs[2], "rotation", -0.07, 1)
 	if level.number == 5:
 		snow.emitting = true
-	if level.number == 6:
-		for piece in pieces.get_children():
-			if piece.shape_id == 5 or piece.shape_id == 6:
-				pieces.move_child(piece, -1)
-				piece.wings()
 
 func check_for_win():
 	var overlap = false

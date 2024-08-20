@@ -19,6 +19,18 @@ var pivot
 func _ready() -> void:
 	SignalBus.level_completed.connect(_on_level_completed)
 
+func _on_settle_finished():
+	if level.number == 6:
+		if shape_id == 5 or shape_id == 6:
+			get_parent().move_child(self, -1)
+			position += polygon.polygon[7]
+			for i in range(polygon.polygon.size()):
+				polygon.polygon[i] -= polygon.polygon[7]
+			
+			var tween = create_tween().set_trans(Tween.TRANS_SINE)
+			tween.set_loops()
+			tween.tween_property(self, "scale", Vector2(.65, 1), 0.6)
+			tween.tween_property(self, "scale", Vector2.ONE, 0.6)
 
 func _on_level_completed(_l: Level):
 	var new_pos = container.position + Vector2(-level.container_edge_size / 2, -level.container_edge_size / 2) + Vector2(pivot)
@@ -26,13 +38,8 @@ func _on_level_completed(_l: Level):
 	rotation_degrees = int(rotation_degrees) % 360
 	tween.tween_property(self, "position", new_pos, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(self, "rotation", 0, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).finished.connect(_on_settle_finished)
 
-func wings():
-	var tween = create_tween().set_trans(Tween.TRANS_SINE)
-	tween.set_loops()
-	tween.tween_property(self, "scale", Vector2(.5, 1), 0.6)
-	tween.tween_property(self, "scale", Vector2.ONE, 0.6)
 
 func sway():
 	var tween = create_tween().set_trans(Tween.TRANS_SINE)
@@ -139,7 +146,12 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			rotate_in_place(90)
 			get_viewport().set_input_as_handled()
 		if event.is_action_pressed('space'):
-			_on_level_completed(level)
+			var new_pos = container.position + Vector2(-level.container_edge_size / 2, -level.container_edge_size / 2) + Vector2(pivot)
+			var tween = create_tween()
+			rotation_degrees = int(rotation_degrees) % 360
+			tween.tween_property(self, "position", new_pos, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tween.parallel().tween_property(self, "rotation", 0, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		
 
 func _unhandled_input(event):
