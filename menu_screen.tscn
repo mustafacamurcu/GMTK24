@@ -46,7 +46,7 @@ theme_override_constants/margin_bottom = 50
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "Mr. Wizard,
-The Window Mender!"
+The Window Mender"
 label_settings = SubResource("LabelSettings_mrtd2")
 horizontal_alignment = 1
 

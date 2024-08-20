@@ -43,7 +43,7 @@ theme_override_constants/margin_bottom = 100
 [node name="GridContainer" type="GridContainer" parent="VBox/GridMargin"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/h_separation = 360
+theme_override_constants/h_separation = 320
 theme_override_constants/v_separation = 300
 columns = 5
 

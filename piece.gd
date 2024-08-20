@@ -11,12 +11,50 @@ var dragging_spot
 var picked_up_from
 var rotation_pivot
 
+var container
 var level: Level
 var shape_id
+var pivot
 
-var scales = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4]
-var small_scales = [0.25, 0.5, 0.75, 1]
-var rotations = [0, 90, 180, 270]
+func _ready() -> void:
+	SignalBus.level_completed.connect(_on_level_completed)
+
+
+func _on_level_completed(_l: Level):
+	var new_pos = container.position + Vector2(-level.container_edge_size / 2, -level.container_edge_size / 2) + Vector2(pivot)
+	var tween = create_tween()
+	rotation_degrees = int(rotation_degrees) % 360
+	tween.tween_property(self, "position", new_pos, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "rotation", 0, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+func wings():
+	var tween = create_tween().set_trans(Tween.TRANS_SINE)
+	tween.set_loops()
+	tween.tween_property(self, "scale", Vector2(.5, 1), 0.6)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.6)
+
+func sway():
+	var tween = create_tween().set_trans(Tween.TRANS_SINE)
+	tween.set_loops()
+	tween.tween_property(self, "position", position + Vector2(0, -15), 0.6)
+	tween.parallel().tween_property(self, "rotation", 0.07, 0.6)
+	tween.tween_property(self, "position", position + Vector2(0, + 15), 0.6)
+	tween.parallel().tween_property(self, "rotation", 0, 0.6)
+	tween.tween_property(self, "position", position + Vector2(0, -15), 0.6)
+	tween.parallel().tween_property(self, "rotation", -.07, 0.6)
+	tween.tween_property(self, "position", position + Vector2(0, + 15), 0.6)
+	tween.parallel().tween_property(self, "rotation", 0, 0.6)
+
+func heartbeat():
+	var tween = create_tween()
+	tween.set_loops()
+	tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.2).set_trans(Tween.TRANS_QUINT)
+	tween.tween_property(self, "scale", Vector2.ONE * 1, 0.2).set_trans(Tween.TRANS_QUINT)
+	tween.tween_interval(.1)
+	tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.2).set_trans(Tween.TRANS_QUINT)
+	tween.tween_property(self, "scale", Vector2.ONE * 1, 0.2).set_trans(Tween.TRANS_QUINT)
+	tween.tween_interval(.5)
 
 func get_global_polygon():
 	var points = []
@@ -29,19 +67,10 @@ func set_polygon(points: PackedVector2Array, level_, c):
 	polygon = Polygon2D.new()
 	polygon.polygon = points
 	polygon.color = c
-	polygon.color.a = 0.7
+	polygon.color.a = 0.8
 	add_child(polygon)
 	# Area2D polygon for mouse events
 	polygon_shape.polygon = polygon.polygon
-
-func shuffle():
-	var s = scales.pick_random()
-	var area = Cs.polygon_area(polygon.polygon)
-	if area * s * s > (level.container_edge_size) * (level.container_edge_size) / 8:
-		s = small_scales.pick_random()
-	scale.x = s
-	scale.y = s
-	rotation_degrees = rotations.pick_random()
 
 func _process(_delta: float) -> void:
 	if dragging:
@@ -109,6 +138,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		if event.is_action_pressed('right'):
 			rotate_in_place(90)
 			get_viewport().set_input_as_handled()
+		if event.is_action_pressed('space'):
+			_on_level_completed(level)
 		
 
 func _unhandled_input(event):

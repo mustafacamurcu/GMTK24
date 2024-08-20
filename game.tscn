@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cfnitqlqe5e8u"]
+[gd_scene load_steps=12 format=3 uid="uid://cfnitqlqe5e8u"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_0gxu6"]
 [ext_resource type="AudioStream" uid="uid://bfqcjgsvkjghl" path="res://audio/footstep_concrete_001.ogg" id="2_rwsl2"]
@@ -6,9 +6,10 @@
 [ext_resource type="Script" path="res://sfx.gd" id="3_3v2id"]
 [ext_resource type="Script" path="res://menu_button.gd" id="3_pjgsm"]
 [ext_resource type="FontFile" uid="uid://j4npda7u1ew6" path="res://Matemasie-Regular.ttf" id="5_kdjhq"]
+[ext_resource type="Texture2D" uid="uid://c5o35t6jm1ddx" path="res://camel-svgrepo-com.svg" id="7_lr8qt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5awvw"]
-bg_color = Color(0.498039, 0.733333, 0.505882, 1)
+bg_color = Color(0.4958, 0.74, 0.49987, 1)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
@@ -20,23 +21,24 @@ corner_radius_bottom_right = 150
 corner_radius_bottom_left = 150
 
 [sub_resource type="LabelSettings" id="LabelSettings_b8kc6"]
+line_spacing = -10.0
 font = ExtResource("5_kdjhq")
-font_size = 140
+font_size = 130
 outline_size = 50
 outline_color = Color(1, 0.18, 0.18, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kiqy0"]
 font = ExtResource("5_kdjhq")
 font_size = 45
-font_color = Color(0.508667, 1, 0.33, 1)
-outline_size = 15
+font_color = Color(0.33154, 0.651037, 0.214595, 1)
+outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkfha"]
 content_margin_left = 30.0
 content_margin_right = 30.0
 content_margin_bottom = 10.0
-bg_color = Color(0.352037, 0.487601, 0.252487, 1)
+bg_color = Color(0.370533, 0.56, 0.2352, 1)
 corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
@@ -98,7 +100,7 @@ theme_override_constants/margin_bottom = 30
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 200
-text = "SOLVED!"
+text = "Repaired!"
 label_settings = SubResource("LabelSettings_b8kc6")
 horizontal_alignment = 1
 
@@ -107,18 +109,15 @@ layout_mode = 2
 
 [node name="Flavor" type="Label" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer3"]
 layout_mode = 2
-text = "Thanks Mr. Wizard. 
-Now I can watch the boat
-sway on the sea outside.
-Isn't our magical land beautiful?"
 label_settings = SubResource("LabelSettings_kiqy0")
 horizontal_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="YouWon/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 10
 theme_override_constants/margin_top = 75
+theme_override_constants/margin_bottom = 30
 
 [node name="VBoxContainer" type="VBoxContainer" parent="YouWon/PanelContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
@@ -238,3 +237,66 @@ angle_max = 720.0
 scale_amount_min = 15.0
 scale_amount_max = 40.0
 color = Color(0.7776, 0.77868, 0.81, 1)
+
+[node name="Smoke" type="CPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(-494, -26)
+emitting = false
+amount = 30
+lifetime = 2.5
+lifetime_randomness = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(40, 1)
+direction = Vector2(0, -1)
+spread = 40.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 120.0
+scale_amount_min = 20.0
+scale_amount_max = 30.0
+color = Color(0.11, 0.0748, 0.0748, 1)
+
+[node name="Camels" type="Node2D" parent="."]
+visible = false
+
+[node name="Camel" type="TextureRect" parent="Camels"]
+offset_left = -666.0
+offset_top = 119.0
+offset_right = -499.0
+offset_bottom = 317.0
+texture = ExtResource("7_lr8qt")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Camel2" type="TextureRect" parent="Camels"]
+offset_left = -286.0
+offset_top = 97.0
+offset_right = -134.0
+offset_bottom = 234.0
+texture = ExtResource("7_lr8qt")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Camel3" type="TextureRect" parent="Camels"]
+offset_left = -396.0
+offset_top = 22.0
+offset_right = -275.0
+offset_bottom = 174.0
+texture = ExtResource("7_lr8qt")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Snow" type="CPUParticles2D" parent="."]
+position = Vector2(-490, -578)
+emitting = false
+amount = 500
+lifetime = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(400, 1)
+direction = Vector2(0, 1)
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 200.0
+scale_amount_min = 8.0
+scale_amount_max = 8.0

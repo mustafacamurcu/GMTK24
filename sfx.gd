@@ -7,7 +7,5 @@ func _ready() -> void:
 	SignalBus.sfx_changed.connect(_on_sfx_changed)
 
 func _on_sfx_changed(value):
-	print(value)
 	volume_db = linear_to_db(value / 100. * volume_factor)
-	print(volume_db)
 	SignalBus.menu_button_clicked.emit()

@@ -6,9 +6,11 @@ const grid_size = 32
 var snap_grid_pixels
 var container_edge_size
 var number
+var flavor_text
 
-static func create(_shapes: Array[Shape], n) -> Level:
+static func create(_shapes: Array[Shape], n, flavor) -> Level:
   var level = Level.new()
+  level.flavor_text = flavor
   level.snap_grid_pixels = int(Cs.CONTAINER_EDGE_SIZE / grid_size)
   level.number = n
   level.container_edge_size = int(Cs.CONTAINER_EDGE_SIZE / grid_size) * grid_size
@@ -156,7 +158,6 @@ static func has_good_angles(pointA, pointB, neighborsA, neighborsB) -> bool:
     var vectorB: Vector2 = pointB - pointA
     var vectorC: Vector2 = pointC - pointA
     var angle = abs(rad_to_deg(vectorB.angle_to(vectorC)))
-    print(angle)
     if angle < 30:
       return false
   
@@ -164,7 +165,6 @@ static func has_good_angles(pointA, pointB, neighborsA, neighborsB) -> bool:
     var vectorA: Vector2 = pointA - pointB
     var vectorC: Vector2 = pointC - pointB
     var angle = abs(rad_to_deg(vectorA.angle_to(vectorC)))
-    print(angle)
     if angle < 20:
       return false
   return true

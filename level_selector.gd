@@ -21,5 +21,5 @@ func _ready() -> void:
 func _on_level_completed(level: Level):
 	grid.get_child(level.number - 1).reveal()
 
-	if level.number != levels.size() - 1:
+	if level.number != levels.size():
 		grid.get_child(level.number).unlock()

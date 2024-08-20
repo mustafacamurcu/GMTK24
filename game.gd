@@ -7,6 +7,11 @@ const PIECE = preload("res://piece.tscn")
 @onready var win_sfx = $WinSound
 @onready var you_won = $YouWon
 @onready var particles = $Particles
+@onready var flavor = $YouWon/PanelContainer/VBoxContainer/MarginContainer3/Flavor
+
+@onready var smoke = $Smoke
+@onready var snow = $Snow
+@onready var camels = $Camels
 
 var won = false
 
@@ -32,10 +37,44 @@ func win():
 		return
 	won = true
 	you_won.show()
+	flavor.visible_ratio = 0
+	create_tween().tween_property(flavor, "visible_ratio", 1., flavor.text.length() / 25)
 	win_sfx.play()
 	for particle: CPUParticles2D in particles.get_children():
 		particle.emitting = true
 	SignalBus.level_completed.emit(level)
+
+	if level.number == 1:
+		smoke.emitting = true
+	if level.number == 2:
+		for piece in pieces.get_children():
+			if piece.shape_id == 0:
+				pieces.move_child(piece, -1)
+				piece.heartbeat()
+				break
+	if level.number == 3:
+		for piece in pieces.get_children():
+			if piece.shape_id == 5 or piece.shape_id == 4:
+				pieces.move_child(piece, -1)
+				piece.sway()
+	if level.number == 4:
+		camels.show()
+		var cs = camels.get_children()
+		var tween = create_tween().set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_IN)
+		tween.set_loops()
+		tween.tween_property(cs[0], "rotation", 0.07, 1)
+		tween.parallel().tween_property(cs[1], "rotation", 0.07, 1)
+		tween.parallel().tween_property(cs[2], "rotation", 0.07, 1)
+		tween.tween_property(cs[0], "rotation", -0.07, 1)
+		tween.parallel().tween_property(cs[1], "rotation", -0.07, 1)
+		tween.parallel().tween_property(cs[2], "rotation", -0.07, 1)
+	if level.number == 5:
+		snow.emitting = true
+	if level.number == 6:
+		for piece in pieces.get_children():
+			if piece.shape_id == 5 or piece.shape_id == 6:
+				pieces.move_child(piece, -1)
+				piece.wings()
 
 func check_for_win():
 	var overlap = false
@@ -75,6 +114,7 @@ func check_for_win():
 
 func setup(level_: Level):
 	level = level_
+	flavor.text = level.flavor_text
 	create_container()
 	create_frame()
 	create_pieces()
@@ -89,7 +129,7 @@ func create_container():
 		Vector2i(half, -half),
 		Vector2i(half, half)
 	])
-	var offset = Vector2i(-Cs.SCREEN_WIDTH / 4 + 10, 0)
+	var offset = Vector2i(-Cs.SCREEN_WIDTH / 4 + 40, -20)
 	container.position = Cs.snap_to_grid(offset, level.snap_grid_pixels)
 	container.color = Cs.WHITE1
 	add_child(container)
@@ -97,7 +137,7 @@ func create_container():
 
 func create_frame():
 	var cross = Polygon2D.new()
-	var width = 5
+	var width = 10
 	var half = level.container_edge_size / 2
 	cross.polygon = PackedVector2Array([
 		Vector2i(-width, -half),
@@ -121,10 +161,35 @@ func create_frame():
 	var frame = Polygon2D.new()
 	frame.polygon = container.polygon.duplicate()
 	frame.position = container.position
-	frame.scale = Vector2(1.1, 1.1)
+	frame.scale = Vector2(1.08, 1.08)
 	frame.color = Color.hex(0x664433FF)
 	add_child(frame)
 	frame.z_index = -3
+
+	var frame2 = Polygon2D.new()
+	frame2.polygon = container.polygon.duplicate()
+	frame2.position = container.position
+	frame2.scale = Vector2(1.2, 1.2)
+	frame2.color = Color.hex(0x8a5a42FF)
+	add_child(frame2)
+	frame2.z_index = -4
+
+	var frame_half_height = frame2.to_global(frame2.polygon[0]).distance_to(frame2.to_global(frame2.polygon[1])) / 2
+
+	var sill = Polygon2D.new()
+	var w = level.container_edge_size * 0.68
+	var h = 35
+	sill.polygon = PackedVector2Array([
+		Vector2i(-w, -h),
+		Vector2i(+ w, -h),
+		Vector2i(+ w, + h),
+		Vector2i(-w, + h),
+	])
+	sill.color = Color.hex(0x664433FF)
+	sill.position = container.position + Vector2(0, frame_half_height + h)
+	sill.z_index = -5
+	add_child(sill)
+
 
 func create_piece_box():
 	var scale = 0.9
@@ -150,7 +215,6 @@ func _ready() -> void:
 	SignalBus.next_level_pressed.connect(_on_next_level_pressed)
 
 func _on_next_level_pressed():
-	print("hello")
 	SignalBus.level_selected.emit(Cs.LEVELS[level.number % 10])
 
 func create_pieces():
@@ -182,6 +246,8 @@ func create_pieces():
 		piece.scale.y = shape.scale
 		piece.shape_id = shape_id
 		piece.set_polygon(PackedVector2Array(poly), level, shape.color)
+		piece.container = container
+		piece.pivot = pivot
 
 
 func get_global_container_polygon():

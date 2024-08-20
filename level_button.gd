@@ -25,7 +25,7 @@ func set_level(l: Level):
 
 func unlock():
 	unlocked = true
-	color_rect.color = Cs.GREEN1
+	color_rect.color = Cs.UIGREEN1
 
 func reveal():
 	if revealed:

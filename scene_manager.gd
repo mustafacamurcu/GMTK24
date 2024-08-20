@@ -62,7 +62,6 @@ func _on_level_selection_pressed():
 	level_selector.show()
 
 func _on_level_selected(level: Level):
-	print("sup")
 	level_selector.hide()
 	if is_instance_valid(game):
 		game.queue_free()
