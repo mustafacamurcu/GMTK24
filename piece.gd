@@ -54,11 +54,17 @@ func expand():
 	center_before /= polygon.polygon.size()
 	scale.x += .25
 	scale.y += .25
+	var area = Cs.polygon_area(get_global_polygon())
+	if area > (level.container_edge_size) * (level.container_edge_size) / 2:
+		scale.x -= .25
+		scale.y -= .25
+		return
 	var center_after = Vector2.ZERO
 	for p in polygon.polygon:
 		center_after += to_global(p)
 	center_after /= polygon.polygon.size()
 	position += center_before - center_after
+	SignalBus.piece_put_down.emit(self)
 
 func shrink():
 	if scale.x < 0.3:
@@ -74,6 +80,7 @@ func shrink():
 		center_after += to_global(p)
 	center_after /= polygon.polygon.size()
 	position += center_before - center_after
+	SignalBus.piece_put_down.emit(self)
 
 func rotate_in_place(deg):
 	var center_before = Vector2.ZERO
@@ -86,6 +93,7 @@ func rotate_in_place(deg):
 		center_after += to_global(p)
 	center_after /= polygon.polygon.size()
 	position += center_before - center_after
+	SignalBus.piece_put_down.emit(self)
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if mouse_on_me:

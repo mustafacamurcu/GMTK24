@@ -28,17 +28,17 @@ static func create_random(_snap_grid_pixels, _grid_size, breakpoints = 20):
   var adjacency = {}
   
   var corners = [
-    Vector2i(0, level.container_edge_size),
-    Vector2i(0, 0),
-    Vector2i(level.container_edge_size, 0),
-    Vector2i(level.container_edge_size, level.container_edge_size),
-  ]
+Vector2i(0, level.container_edge_size),
+Vector2i(0, 0),
+Vector2i(level.container_edge_size, 0),
+Vector2i(level.container_edge_size, level.container_edge_size)]
+
   for i in range(corners.size()):
     # only add edge once for border cuz they border only one polygon
     var neighbor = corners[(i - 1 + corners.size()) % corners.size()]
     adjacency[corners[i]] = [neighbor]
     edges.append([corners[i], neighbor])
-  points.append_array(corners)
+    points.append_array(corners)
 
 
   # Select random points on the grid to break the square from
@@ -69,16 +69,16 @@ static func create_random(_snap_grid_pixels, _grid_size, breakpoints = 20):
         and p.distance_to(other) < closest_dist
         and no_overlap([p, other], edges)
         and has_good_angles(p, other, adjacency[p], adjacency[other])):
-              closest_dist = p.distance_to(other)
-              closest = other
-      if closest == p:
-        if adjacency[p].size() < 2:
-          bads.append(p)
-        break
-      adjacency[p].append(closest)
-      adjacency[closest].append(p)
-      edges.append([p, closest])
-      edges.append([closest, p])
+            closest_dist = p.distance_to(other)
+            closest = other
+        if closest == p:
+          if adjacency[p].size() < 2:
+            bads.append(p)
+          break
+        adjacency[p].append(closest)
+        adjacency[closest].append(p)
+        edges.append([p, closest])
+        edges.append([closest, p])
   
   # Remove bad (non-polygon) points
   while bads:
@@ -124,9 +124,9 @@ static func create_random(_snap_grid_pixels, _grid_size, breakpoints = 20):
         if angle < smallest_angle:
           smallest_angle = angle
           C = point
-      edge = [B, C]
-      remove_from_edges(edge, edges)
-      adjacency[B].erase(C)
+        edge = [B, C]
+        remove_from_edges(edge, edges)
+        adjacency[B].erase(C)
     level.polygons.append(polygon)
 
 static func remove_from_edges(edge, edges):

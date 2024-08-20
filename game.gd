@@ -91,7 +91,7 @@ func create_container():
 	])
 	var offset = Vector2i(-Cs.SCREEN_WIDTH / 4 + 10, 0)
 	container.position = Cs.snap_to_grid(offset, level.snap_grid_pixels)
-	container.color = Cs.WHITE
+	container.color = Cs.WHITE1
 	add_child(container)
 	container.z_index = -2
 
